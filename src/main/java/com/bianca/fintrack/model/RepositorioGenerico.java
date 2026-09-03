@@ -25,7 +25,15 @@ public class RepositorioGenerico<T> {
         return registros;
     }
 
+    public void adicionarRegistros(T item){
+        registros.add(item);
+    }
     
+    public List<T> listarRegistros(){
+        return registros;
+    }
     
-    
+    public void removerRegistros(T item){
+        registros.remove(item);
+    }
 }

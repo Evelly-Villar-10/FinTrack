@@ -25,8 +25,19 @@ public class Transacao {
         this.data = LocalDate.now();
     }
 
+    public Transacao(boolean ehReceita, double valor, String descricao) {
+        this.ehReceita = ehReceita;
+        this.valor = valor;
+        this.descricao = descricao;
+        this.data = LocalDate.now();
+    }
+    
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean isEhReceita() {

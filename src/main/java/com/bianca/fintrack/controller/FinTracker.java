@@ -93,7 +93,9 @@ public class FinTracker {
     
     public void adicionarTransacaoDia(List<? extends Transacao> listaDoDia){
         for(Transacao t : listaDoDia){
+            t.setId(contadorId);
             transacoes.adicionarRegistros(t);
+            contadorId++;
         }
     }
 }

@@ -5,9 +5,10 @@
 package com.bianca.fintrack.controller;
 
 import com.bianca.fintrack.exceptions.EntradaInvalidaException;
+import com.bianca.fintrack.model.RepositorioGenerico;
 import com.bianca.fintrack.model.Transacao;
 import com.bianca.fintrack.model.TransacaoMensal;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,9 +16,9 @@ import java.util.ArrayList;
  */
 public class FinTracker {
     private int contadorId = 1;
-    private ArrayList<Transacao> transacoes;
+    private RepositorioGenerico<Transacao> transacoes;
 
-    public FinTracker(ArrayList<Transacao> transacoes) {
+    public FinTracker(RepositorioGenerico<Transacao> transacoes) {
         this.transacoes = transacoes;
     }
 
@@ -34,7 +35,7 @@ public class FinTracker {
         }
       
         Transacao novaTransacao = new Transacao(contadorId, ehReceita, valor, descricao);
-        transacoes.add(novaTransacao);
+        transacoes.adicionarRegistros(novaTransacao);
         contadorId++;
     } 
     
@@ -47,27 +48,27 @@ public class FinTracker {
         }
         
         TransacaoMensal mensal = new TransacaoMensal(diaRecorrencia, contadorId, ehReceita, valor, descricao);
-        transacoes.add(mensal);
+        transacoes.adicionarRegistros(mensal);
         contadorId++;
     }
     
     public void listarTransacoes() throws EntradaInvalidaException{
-       if(transacoes.isEmpty()){
+       if(transacoes.getRegistros().isEmpty()){
         throw new EntradaInvalidaException("\nA lista não tem transações.");    
        }else{
-           for(Transacao t : transacoes){
+           for(Transacao t : transacoes.getRegistros()){
                System.out.println(t);
            }
        }
     }
     
     public void removerTransacao(int id) throws EntradaInvalidaException{
-      if(transacoes.isEmpty()){
+      if(transacoes.getRegistros().isEmpty()){
         throw new EntradaInvalidaException("\nA lista não tem transações para ser removidas.");    
        }
-    for(int i = 0; i < transacoes.size(); i++){
-            if(transacoes.get(i).getId() == id){
-                transacoes.remove(i);
+    for(int i = 0; i < transacoes.getRegistros().size(); i++){
+            if(transacoes.getRegistros().get(i).getId() == id){
+                transacoes.removerRegistros(transacoes.getRegistros().get(i));
                 System.out.println("\nTransação removida com sucesso.");
                 return;
             }
@@ -77,10 +78,10 @@ public class FinTracker {
     
     public void calcularSaldoTotal() throws EntradaInvalidaException{
       double saldo = 0;
-      if(transacoes.isEmpty()){
+      if(transacoes.getRegistros().isEmpty()){
         throw new EntradaInvalidaException("\nA lista não tem transações.");    
        }
-      for(Transacao t : transacoes){
+      for(Transacao t : transacoes.getRegistros()){
           if(t.isEhReceita()){
             saldo += t.getValor();  
           }else{
@@ -88,5 +89,11 @@ public class FinTracker {
           }
       }
         System.out.println("\nSaldo atual:" + saldo);
+    }
+    
+    public void adicionarTransacaoDia(List<? extends Transacao> listaDoDia){
+        for(Transacao t : listaDoDia){
+            transacoes.adicionarRegistros(t);
+        }
     }
 }

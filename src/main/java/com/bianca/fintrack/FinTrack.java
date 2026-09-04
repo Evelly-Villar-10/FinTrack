@@ -5,8 +5,8 @@ package com.bianca.fintrack;
 
 import com.bianca.fintrack.controller.FinTracker;
 import com.bianca.fintrack.exceptions.EntradaInvalidaException;
+import com.bianca.fintrack.model.RepositorioGenerico;
 import com.bianca.fintrack.model.Transacao;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -19,7 +19,7 @@ public class FinTrack {
     public static void main(String[] args) {
         Scanner ler = new Scanner(System.in);
 
-        ArrayList<Transacao> listaInicial = new ArrayList<>();
+        RepositorioGenerico<Transacao> listaInicial = new RepositorioGenerico<>();
         FinTracker fintracker1 = new FinTracker(listaInicial);
 
         int opcao = 0;

@@ -17,19 +17,19 @@ public class Transacao {
     private String descricao; 
     private LocalDate data;
 
-    public Transacao(int id, boolean ehReceita, double valor, String descricao) {
+    public Transacao(int id, boolean ehReceita, double valor, String descricao, LocalDate data) {
         this.id = id;
         this.ehReceita = ehReceita;
         this.valor = valor;
         this.descricao = descricao;
-        this.data = LocalDate.now();
+        this.data = data;
     }
 
-    public Transacao(boolean ehReceita, double valor, String descricao) {
+    public Transacao(boolean ehReceita, double valor, String descricao, LocalDate data) {
         this.ehReceita = ehReceita;
         this.valor = valor;
         this.descricao = descricao;
-        this.data = LocalDate.now();
+        this.data = data;
     }
     
     public int getId() {
@@ -66,6 +66,10 @@ public class Transacao {
 
     public LocalDate getData() {
         return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     @Override

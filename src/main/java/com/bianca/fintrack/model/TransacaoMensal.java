@@ -4,6 +4,8 @@
  */
 package com.bianca.fintrack.model;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author bianca
@@ -11,8 +13,8 @@ package com.bianca.fintrack.model;
 public class TransacaoMensal extends Transacao{
     private int diaRecorrencia; 
 
-    public TransacaoMensal(int diaRecorrencia, int id, boolean ehReceita, double valor, String descricao) {
-        super(id, ehReceita, valor, descricao);
+    public TransacaoMensal(int diaRecorrencia, int id, boolean ehReceita, double valor, String descricao, LocalDate data) {
+        super(id, ehReceita, valor, descricao, data);
         this.diaRecorrencia = diaRecorrencia;
     }
 

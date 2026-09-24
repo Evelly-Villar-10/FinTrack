@@ -7,6 +7,7 @@ import com.bianca.fintrack.controller.FinTracker;
 import com.bianca.fintrack.exceptions.EntradaInvalidaException;
 import com.bianca.fintrack.model.RepositorioGenerico;
 import com.bianca.fintrack.model.Transacao;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -62,7 +63,11 @@ public class FinTrack {
                             System.out.println("\nDigite a descrição: ");
                             String descricao = ler.nextLine();
 
-                            fintracker1.adicionarTransacao(ehReceita, valor, descricao);
+                            System.out.println("\nDigite a data: ");
+                            String dataEntrada = ler.nextLine();
+                            LocalDate data = LocalDate.parse(dataEntrada);
+
+                            fintracker1.adicionarTransacao(ehReceita, valor, descricao, data);
 
                         } catch (EntradaInvalidaException e) {
                             System.out.println(e.getMessage());
@@ -89,10 +94,14 @@ public class FinTrack {
                             System.out.println("\nDigite a descrição: ");
                             String descricao = ler.nextLine();
 
+                            System.out.println("\nDigite a data: ");
+                            String dataEntrada = ler.nextLine();
+                            LocalDate data = LocalDate.parse(dataEntrada);
+
                             System.out.println("\nDigite o dia de recorrencia: ");
                             int diaRecorrencia = ler.nextInt();
 
-                            fintracker1.adicionarTransacaoMensal(ehReceita, valor, descricao, diaRecorrencia);
+                            fintracker1.adicionarTransacaoMensal(ehReceita, valor, descricao, data, diaRecorrencia);
 
                         } catch (EntradaInvalidaException e) {
                             System.out.println(e.getMessage());
@@ -168,7 +177,11 @@ public class FinTrack {
                                 System.out.println("\nDigite a descrição: ");
                                 String descricao = ler.nextLine();
 
-                                Transacao transacao = new Transacao(ehReceita, valor, descricao);
+                                System.out.println("\nDigite a data: ");
+                                String dataEntrada = ler.nextLine();
+                                LocalDate data = LocalDate.parse(dataEntrada);
+
+                                Transacao transacao = new Transacao(ehReceita, valor, descricao, data);
 
                                 listaTransacoes.add(transacao);
                             }

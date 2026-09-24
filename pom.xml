@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>21</maven.compiler.release> <!-- Dica: Use 21 (LTS) ou a versão exata do JDK que você instalou -->
         <javafx.version>21.0.2</javafx.version>             <!-- Versão estável alinhada ao JDK -->
-        <exec.mainClass>com.bianca.fintrack.FinTrack</exec.mainClass>
+        <exec.mainClass>com.bianca.fintrack.FinApp</exec.mainClass>
     </properties>
 
     <dependencies>
@@ -34,6 +34,19 @@
     </dependencies>
 
     <build>
+        <!-- usado pra direcionar onde estao os artigos .fxml e .css, ja que estao em um pacote diferente do que o maven espera -->
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.fxml</include>
+                    <include>**/*.css</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <!-- Plugin para compilar com Java moderno -->
             <plugin>

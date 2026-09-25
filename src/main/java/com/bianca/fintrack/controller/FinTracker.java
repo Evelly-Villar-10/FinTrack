@@ -17,6 +17,7 @@ import java.util.List;
  */
 public class FinTracker {
 
+    /*contador pra começar em 1 as transaçoes */
     private int contadorId = 1;
     private RepositorioGenerico<Transacao> transacoes;
 
@@ -93,7 +94,8 @@ public class FinTracker {
         System.out.println("\nSaldo atual:" + saldo);
         return saldo;
     }
-
+    
+/*adiciona varias transaçoes referentes a um dia, pega a lista e percorre, ai muda o id pra o correto e depois adiciona nas transaçoes */
     public void adicionarTransacaoDia(List<? extends Transacao> listaDoDia) {
         for (Transacao t : listaDoDia) {
             t.setId(contadorId);

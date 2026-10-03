@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import java.net.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="BorderPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bianca.fintrack.view.CadastroController">
+    <stylesheets>
+        <URL value="@style.css"/>
+    </stylesheets>
+    <top>
+        <Label text="Cadastro de usuários" styleClass="titulocadastro"/>
+    </top>
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Nome" styleClass="nome"/>
+                <TextField fx:id="campoNome" promptText="Digite seu nome aqui" styleClass="colocarnome"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Email" styleClass="email"/>
+                <TextField fx:id="campoEmail" promptText="Digite seu email aqui" styleClass="colocaremail"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="CPF" styleClass="cpf"/>
+                <TextField fx:id="campoCpf" promptText="Digite seu cpf aqui" styleClass="colocarcpf"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Telefone" styleClass="telefone"/>
+                <TextField fx:id="campoTelefone" promptText="Digite seu telefone aqui" styleClass="colocartelefone"/>
+            </HBox>
+            
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Senha" styleClass="senha"/>
+                <PasswordField fx:id="campoSenha" promptText="Digite sua senha aqui" styleClass="colocarsenha"/>
+            </HBox>
+        </VBox>
+    </center>
+    <bottom>
+        <VBox>
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="butaoVoltar" text="Voltar" onAction="#onvoltar" styleClass="butaovoltar"/>
+            
+                <Button fx:id="butaoCadastrar" text="Cadastrar" onAction="#onfazerCadastro" styleClass="butaocadastro"/>
+            </HBox>
+        </VBox>
+    </bottom>
+</BorderPane>

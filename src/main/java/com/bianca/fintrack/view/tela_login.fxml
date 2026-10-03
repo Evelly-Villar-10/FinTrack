@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bianca.fintrack.view.LoginController"
+            id="BorderPane"
+            prefHeight="400.0"
+            prefWidth="600.0">
+    
+    <stylesheets>
+        <URL value="@style.css"/>
+    </stylesheets>
+
+    <top>
+        <Label text="LOGIN" styleClass="titulologin"/>
+    </top>
+
+    <center>
+        <VBox spacing="15" alignment="CENTER">
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Email" styleClass="email"/>
+                <TextField fx:id="campoEmail" promptText="Digite seu email aqui" styleClass="colocaremail"/>
+            </HBox>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Label text="Senha" styleClass="senha"/>
+                <PasswordField fx:id="campoSenha" promptText="Digite sua senha aqui" styleClass="colocarsenha"/>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox>
+            <HBox spacing="10" alignment="CENTER">
+                <Button fx:id="butaoEntrar" text="Entrar" onAction="#onEntrar" styleClass="butaoentrar"/>
+            
+                <Button fx:id="butaoVoltar" text="Voltar" onAction="#onVoltar" styleClass="butaovoltar"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="BoderPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" 
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bianca.fintrack.view.NovaTransacaoController">
+    <stylesheets>
+        <URL value="@style.css"/>
+    </stylesheets>
+    <top>
+        <HBox>
+            <Label fx:id="tituloTopo" text="Adicionar nova transação" styleClass="tituloNovaTransacao" />
+        </HBox>
+    </top>
+    <center>
+        <VBox spacing="20">                 <!--organiza tudo da transacao, um embaixo do outro-->
+            <HBox spacing="20">      <!--receita e despesa, em cima de tudo-->
+                <RadioButton text="Receita" fx:id="butaoMais" styleClass="butaoreceita" />
+                <RadioButton text="Despesa" fx:id="butaoMenos" styleClass="butaodespesa" />
+            </HBox>
+
+            <HBox spacing="20">  <!--valor e data lado a lado-->
+                <VBox spacing="4">
+                    <Label text="Valor" styleClass="valor" />
+                    <TextField fx:id="campoValor" promptText="digite o valor da transação aqui" styleClass="colocarvalor" />
+                </VBox>
+                <VBox spacing="4">       <!--data na vertical (rotulo em cima do campo)-->
+                    <Label text="Data" styleClass="data" />
+                    <DatePicker fx:id="campoData" promptText="selecione a data" styleClass="colocardata" />
+                </VBox>
+                
+            </HBox>
+
+            <VBox spacing="4">
+                <Label text="Descrição" styleClass="descricao" />
+                <TextArea fx:id="campoDescricao" promptText="digite a descrição da transação aqui" styleClass="colocardescricao" />
+            </VBox>
+
+            <HBox alignment="CENTER" spacing="20">
+                <Button text="Salvar" fx:id="botaosalvar" onAction="#onsalvardados" />
+                <Button text="Limpar" fx:id="botaolimpar" onAction="#onlimpardados" />
+            </HBox>
+            <VBox alignment="CENTER">
+                <Label fx:id="mensagem"/>
+            </VBox>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox spacing="10" alignment="CENTER" >
+            <Button fx:id="butaoTelaPrincipal" text="Tela principal" onAction="#onirTelaPrincipal" styleClass="butaotela" />
+            <Button fx:id="butaoRelatorio" text="Relatorio" onAction="#onabrirRelatorio" styleClass="segundobutao" />
+        </HBox>
+    </bottom>
+</BorderPane>

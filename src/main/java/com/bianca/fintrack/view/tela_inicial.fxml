@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bianca.fintrack.view.TelaInicialController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <stylesheets>
+        <URL value="@style.css"/>
+    </stylesheets>
+
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <Label text="FINTRACK" styleClass="nomeprojeto"/>
+            <Label text="Seu controle de finanças" styleClass="frasetematica"/>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER">
+            <Button fx:id="butaoLogin" text="Login" onAction="#onfazerLogin" styleClass="butaologin"/>
+
+            <Button fx:id="butaoCadastro" text="Cadastro" onAction="#onfazerCadastro" styleClass="butaocadastro"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

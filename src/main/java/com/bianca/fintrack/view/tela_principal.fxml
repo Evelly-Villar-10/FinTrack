@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- uso do borderpane para dividir a tela em 5 filhos e chamada do arquivo .css -->
+<BorderPane id="BoderPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="com.bianca.fintrack.view.TelaPrincipalController">
+    <stylesheets>
+        <URL value="@style.css"/>
+    </stylesheets>
+    <center>                                           <!-- coloca a tabela no centro da tela, pela divisao de borderPane -->
+        <TableView fx:id="tabela" styleClass="table">  <!-- fx:id(para usar no controller) e styleClass(para usar no css) -->
+            <columns>
+                <TableColumn fx:id="colData" text="Data" />
+                <TableColumn fx:id="colDescricao" text="Descrição" />
+                <TableColumn fx:id="colValor" text="Valor" />
+                <TableColumn fx:id="colTipo" text="Tipo" />
+            </columns>
+        </TableView>
+    </center>
+    <bottom>                                    <!-- ajusta tudo dentro dele abaixo na tela -->
+        <HBox spacing="10" alignment="CENTER" >
+            <Button fx:id="butaoAdicionar" text="Adicionar nova transação" onAction="#oncriarNovaTransacao" styleClass="primeirobutao"/>
+            <Button fx:id="butaoRelatorio" text="Relatorio" onAction="#onabrirRelatorio" styleClass="segundobutao"/>
+        </HBox>
+    </bottom>
+</BorderPane>

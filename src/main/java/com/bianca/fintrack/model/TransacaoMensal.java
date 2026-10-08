@@ -18,6 +18,11 @@ public class TransacaoMensal extends Transacao{
         this.diaRecorrencia = diaRecorrencia;
     }
 
+    public TransacaoMensal(int diaRecorrencia, boolean ehReceita, double valor, String descricao, LocalDate data, int usuarioId) {
+        super(ehReceita, valor, descricao, data, usuarioId);
+        this.diaRecorrencia = diaRecorrencia;
+    }
+
     public int getDiaRecorrencia() {
         return diaRecorrencia;
     }

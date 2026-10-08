@@ -11,11 +11,13 @@ import java.time.LocalDate;
  * @author bianca
  */
 public class Transacao {
+
     private int id;
     private boolean ehReceita;
     private double valor;
-    private String descricao; 
+    private String descricao;
     private LocalDate data;
+    private int usuarioId;
 
     public Transacao(int id, boolean ehReceita, double valor, String descricao, LocalDate data) {
         this.id = id;
@@ -31,7 +33,24 @@ public class Transacao {
         this.descricao = descricao;
         this.data = data;
     }
-    
+
+    public Transacao(int id, boolean ehReceita, double valor, String descricao, LocalDate data, int usuarioId) {
+        this.id = id;
+        this.ehReceita = ehReceita;
+        this.valor = valor;
+        this.descricao = descricao;
+        this.data = data;
+        this.usuarioId = usuarioId;
+    }
+
+    public Transacao(boolean ehReceita, double valor, String descricao, LocalDate data, int usuarioId) {
+        this.ehReceita = ehReceita;
+        this.valor = valor;
+        this.descricao = descricao;
+        this.data = data;
+        this.usuarioId = usuarioId;
+    }
+
     public int getId() {
         return id;
     }
@@ -74,11 +93,19 @@ public class Transacao {
 
     @Override
     public String toString() {
-        return "Transação{" + "id = " + id + "|" +
-                " ehReceita = " + ehReceita + "|" +
-                " valor = " + valor + "|" +
-                " descricao = " + descricao + "|" +
-                " data = " + data + '}';
+        return "Transação{" + "id = " + id + "|"
+                + " ehReceita = " + ehReceita + "|"
+                + " valor = " + valor + "|"
+                + " descricao = " + descricao + "|"
+                + " data = " + data + '}';
+    }
+
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
 }

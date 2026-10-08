@@ -4,9 +4,11 @@
  */
 package com.bianca.fintrack.service;
 
+import com.bianca.fintrack.dao.UsuarioDAO;
 import com.bianca.fintrack.exceptions.EntradaInvalidaException;
 import com.bianca.fintrack.model.RepositorioGenerico;
 import com.bianca.fintrack.model.Usuario;
+import java.sql.SQLException;
 
 /**
  *
@@ -21,8 +23,14 @@ public class UsuarioService {
         this.usuarios = usuarios;
     }
 
+    private UsuarioDAO usuarioDAO;
+
+    public UsuarioService(UsuarioDAO usuario) {
+        this.usuarioDAO = usuario;
+    }
+    
     /*faz o cadastro dos usuarios, verifica todos os campos */
-    public void cadastrarUsuario(String nome, String email, String cpf, String telefone, String senha) throws EntradaInvalidaException {
+    public void cadastrarUsuario(String nome, String email, String cpf, String telefone, String senha) throws EntradaInvalidaException, SQLException{
         if (nome == null || nome.isBlank()) {
             throw new EntradaInvalidaException("\nO nome não pode ser vazio.");
         }
@@ -51,44 +59,39 @@ public class UsuarioService {
             throw new EntradaInvalidaException("\nA senha deve ter no mínimo 6 caracteres. ");
         }
 
-        /*instância um usuario e depois adiciona ele nos registros do repositorio */
+        /*instância um usuario e depois adiciona ele no banco */
         Usuario usuario = new Usuario(nome, email, cpf, telefone, senha);
-        usuarios.adicionarRegistros(usuario);
+        usuarioDAO.adicionar(usuario);
 
     }
 
-    /*função para verificar se o email já existe, percorre a lista e compara com todos, se existir diz erro(não poe ser iguais) */
-    public boolean emailExiste(String email) {
-        for (Usuario t : usuarios.getRegistros()) {
-            if (email.equals(t.getEmail())) {
+    /*função para verificar se o email já existe, com o metodo do dao, se existir retorna verdadeiro se não retonra falso */
+    public boolean emailExiste(String email) throws SQLException {
+        Usuario achado = usuarioDAO.procurarEmail(email);
+            if (achado != null) {
                 return true;
             }
-        }
         return false;
     }
 
     /*função para procurar o email e o usuario referente a ele*/
-    public Usuario buscarPorEmail(String email) {
-        for (Usuario t : usuarios.getRegistros()) {
-            if (email.equals(t.getEmail())) {
-                return t;
-            }
-        }
-        return null;
+    public Usuario buscarPorEmail(String email) throws SQLException {
+        Usuario usuario_encontrado = usuarioDAO.procurarEmail(email);
+        return usuario_encontrado;
     }
 
     /*função para logar o usuario, pega o usuario que teve seu email validado e verifica com sua senha se bate */
-    public boolean loginUsuario(String email, String senha) {
+    public Usuario loginUsuario(String email, String senha) throws SQLException {
         Usuario usuarioEncontrado = buscarPorEmail(email);         /*criação de variável pra guarda retorno da função */
         if (usuarioEncontrado == null) {
             System.out.println("\nErro, email não encontrado. ");
-            return false;
+            return null;
         } else if (senha.equals(usuarioEncontrado.getSenha())) {
             System.out.println("\nLogin realizado com sucesso! ");
-            return true;
+            return usuarioEncontrado;
         } else {
             System.out.println("\nSenha incorreta. Tente novamente. ");
-            return false;
+            return null;
         }
     }
 }

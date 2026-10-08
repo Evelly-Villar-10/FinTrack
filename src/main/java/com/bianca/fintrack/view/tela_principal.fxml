@@ -27,6 +27,8 @@
         <HBox spacing="10" alignment="CENTER" >
             <Button fx:id="butaoAdicionar" text="Adicionar nova transação" onAction="#oncriarNovaTransacao" styleClass="primeirobutao"/>
             <Button fx:id="butaoRelatorio" text="Relatorio" onAction="#onabrirRelatorio" styleClass="segundobutao"/>
+            <Button fx:id="butaoAtualizar" text="Editar" onAction="#onAtualizar" styleClass="primeirobutao"/>
+            <Button fx:id="butaoExcluir" text="Excluir" onAction="#onExcluir" styleClass="segundobutao"/>
         </HBox>
     </bottom>
 </BorderPane>

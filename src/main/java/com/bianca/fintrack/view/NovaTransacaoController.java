@@ -8,7 +8,9 @@ import com.bianca.fintrack.FinApp;
 import com.bianca.fintrack.controller.FinTracker;
 import com.bianca.fintrack.exceptions.EntradaInvalidaException;
 import com.bianca.fintrack.model.FinTrackerInterface;
+import com.bianca.fintrack.model.Transacao;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -24,28 +26,29 @@ import javafx.scene.control.ToggleGroup;
  */
 public class NovaTransacaoController implements FinTrackerInterface {
 
-/*criacao de variaveis do fxml */
+    /*criacao de variaveis do fxml */
     @FXML
     private RadioButton butaoMais;
-
+    
     @FXML
     private RadioButton butaoMenos;
-
+    
     @FXML
     private TextField campoValor;
-
+    
     @FXML
     private TextArea campoDescricao;
-
+    
     @FXML
     private DatePicker campoData;
-
+    
     @FXML
     private Label mensagem;
-
+    
     private FinTracker fintracker;
+    private Transacao transacaoEditando;
 
-/*esse metodo prepara a tela pra quando ela abrir*/
+    /*esse metodo prepara a tela pra quando ela abrir*/
     public void initialize() {
         /*coloca a data atual no campo de digitar a data*/
         campoData.setValue(LocalDate.now());
@@ -54,12 +57,12 @@ public class NovaTransacaoController implements FinTrackerInterface {
         ToggleGroup grupo = new ToggleGroup();
         butaoMais.setToggleGroup(grupo);
         butaoMenos.setToggleGroup(grupo);
-        
+
         /*faz começar sempre em receita */
         butaoMais.setSelected(true);
     }
 
-/*esse butão limpa os campos, volta a data atual, desmarca os botoes, retorna o foco para o valor e limpa a mensagem de conclusão*/
+    /*esse butão limpa os campos, volta a data atual, desmarca os botoes, retorna o foco para o valor e limpa a mensagem de conclusão*/
     @FXML
     public void onlimpardados() {
         campoValor.clear();
@@ -71,55 +74,85 @@ public class NovaTransacaoController implements FinTrackerInterface {
         mensagem.setText(" ");
     }
 
-/*esse metodo pega tudo que o usuario escreveu e guarda em uma variavel(com seus respectivos tipos)
+    /*esse metodo pega tudo que o usuario escreveu e guarda em uma variavel(com seus respectivos tipos)
 que é passada como parametro na hora de criar a nova transacao e limpa os campos após a inserção*/
     @FXML
-    public void onsalvardados() {
+    public void onsalvardados() throws SQLException, IOException {
         boolean ehReceita = butaoMais.isSelected();
         double valor;
-
-        if (campoValor.getText().isBlank()) {        /*verifica se o campo esta vazio e fecha caso esteja */
+        
+        if (campoValor.getText().isBlank()) {
+            /*verifica se o campo esta vazio e fecha caso esteja */
             mensagem.setText("O campo está vazio. Digite um valor. ");
             return;
         }
-        String textoValor = campoValor.getText().replace(",", ".");     /*variavél para trocar a , por ponto, no parseDouble */
-
+        String textoValor = campoValor.getText().replace(",", ".");
+        /*variavél para trocar a , por ponto, no parseDouble */
+        
         try {
             valor = Double.parseDouble(textoValor);
         } catch (NumberFormatException e) {
             mensagem.setText("Digite um número válido. ");
             return;
         }
-
+        
         String descricao = campoDescricao.getText();
         LocalDate data = campoData.getValue();
-        if(data == null){        /*Trata a exceção pra sempre ter uma data*/
+        if (data == null) {
+            /*Trata a exceção pra sempre ter uma data*/
             mensagem.setText("Selecione uma data. ");
             return;
         }
-
+        
+        int usuarioId = FinApp.getUsuariologado().getId();
         try {
-            fintracker.adicionarTransacao(ehReceita, valor, descricao, data);
-            onlimpardados();
-            mensagem.setText("transação salva com sucesso! ");
+            if (transacaoEditando == null) {
+                fintracker.adicionarTransacao(ehReceita, valor, descricao, data, usuarioId);
+                onlimpardados();
+                mensagem.setText("transação salva com sucesso! ");
+            } else {
+                transacaoEditando.setEhReceita(ehReceita);
+                transacaoEditando.setValor(valor);
+                transacaoEditando.setDescricao(descricao);
+                transacaoEditando.setData(data);
+                
+                fintracker.atualizarTransacao(transacaoEditando);
+                onlimpardados();
+                mensagem.setText("transação atualizada com sucesso! ");
+                FinApp.setRoot("/com/bianca/fintrack/view/tela_principal");
+            }
         } catch (EntradaInvalidaException e) {
             mensagem.setText(e.getMessage());
         }
     }
 
-/*esse metodo coloca o objeto fintracker dentro do controller*/
+    /*esse metodo coloca o objeto fintracker dentro do controller*/
     public void setFinTracker(FinTracker fintracker) {
         this.fintracker = fintracker;
     }
-
+    
+    public void setTransacaoEditando(Transacao transacao) {
+        this.transacaoEditando = transacao;
+        
+        campoValor.setText(String.valueOf(transacao.getValor()));
+        campoDescricao.setText(transacao.getDescricao());
+        campoData.setValue(transacao.getData());
+        
+        if (transacao.isEhReceita()) {
+            butaoMais.setSelected(true);
+        } else {
+            butaoMenos.setSelected(true);
+        }
+    }
+    
     @FXML
     public void onirTelaPrincipal() throws IOException, EntradaInvalidaException {
         FinApp.setRoot("/com/bianca/fintrack/view/tela_principal");
     }
-
+    
     @FXML
     public void onabrirRelatorio() throws IOException, EntradaInvalidaException {
         FinApp.setRoot("/com/bianca/fintrack/view/relatorio");
     }
-
+    
 }

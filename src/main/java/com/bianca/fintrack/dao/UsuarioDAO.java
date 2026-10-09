@@ -16,10 +16,11 @@ import java.util.List;
  *
  * @author bianca
  */
-public class UsuarioDAO implements DAO<Usuario>{
+public class UsuarioDAO implements DAO<Usuario> {
 
-    // classe que cadastra o usuario com o banco de dados
-@Override
+    /*metodo que cadastra o usuario com o banco de dados, o inset insere uma linha na tabela com os dados, 
+    * depois o java cria a conexão e prepara o comando usando a conexão*/
+    @Override
     public void adicionar(Usuario usuario) throws SQLException {
         String sql = "INSERT INTO usuario(nome, email, cpf, telefone, senha) VALUES(?, ?, ?, ?, ?)";
         try (Connection conectar = Conexao.conectar(); PreparedStatement stmt = conectar.prepareStatement(sql)) {
@@ -35,6 +36,9 @@ public class UsuarioDAO implements DAO<Usuario>{
         }
     }
 
+    /*metodo que procura o usuario pelo email como parametro, 
+    * cria a conexão e prepara o comando, depois preenche o campo e executa o comando
+    * pega os valores devolvidos do banco e guarda em uma variável e depois cria um objeto Usuario e retorna ele*/
     public Usuario procurarEmail(String email) throws SQLException {
         String sql = "SELECT * FROM usuario WHERE email = ?";
         try (Connection conectar = Conexao.conectar(); PreparedStatement stmt = conectar.prepareStatement(sql)) {
@@ -48,7 +52,7 @@ public class UsuarioDAO implements DAO<Usuario>{
                 String telefone = resultado.getString("telefone");
                 String senha = resultado.getString("senha");
                 int id = resultado.getInt("id");
-                
+
                 Usuario usuario = new Usuario(nome, email_encontrado, cpf, telefone, senha, id);
                 return usuario;
             }

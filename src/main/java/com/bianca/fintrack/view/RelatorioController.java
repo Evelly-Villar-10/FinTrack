@@ -43,6 +43,7 @@ public class RelatorioController implements FinTrackerInterface {
     @Override
     public void setFinTracker(FinTracker fintracker) throws EntradaInvalidaException {
         this.fintracker = fintracker;
+
         int usuarioId = FinApp.getUsuariologado().getId();
         try {
             double saldo = fintracker.calcularSaldoTotal(usuarioId);
@@ -57,6 +58,7 @@ public class RelatorioController implements FinTrackerInterface {
 
             int quantidade = fintracker.buscarTransacoes(usuarioId).size();
             totaltransacoes.setText(String.valueOf(quantidade));
+
         } catch (SQLException ex) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Erro no banco");

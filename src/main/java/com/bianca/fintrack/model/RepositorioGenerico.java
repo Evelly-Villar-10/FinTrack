@@ -11,14 +11,15 @@ import java.util.List;
  *
  * @author bianca
  */
-/*criacao de uma classe generica do tipo T, que cria uma lista de registros, onde sera adicionadas as trnasacoes,
+/*criacao de uma classe generica do tipo T, que cria uma lista de registros,
 com os metodos de adicionar, listar e remover resgistros*/
 public class RepositorioGenerico<T> {
+
     private List<T> registros = new ArrayList<>();
 
     public RepositorioGenerico() {
     }
-    
+
     public RepositorioGenerico(List<T> registros) {
         this.registros = registros;
     }
@@ -27,15 +28,15 @@ public class RepositorioGenerico<T> {
         return registros;
     }
 
-    public void adicionarRegistros(T item){
+    public void adicionarRegistros(T item) {
         registros.add(item);
     }
-    
-    public List<T> listarRegistros(){
+
+    public List<T> listarRegistros() {
         return registros;
     }
-    
-    public void removerRegistros(T item){
+
+    public void removerRegistros(T item) {
         registros.remove(item);
     }
 }

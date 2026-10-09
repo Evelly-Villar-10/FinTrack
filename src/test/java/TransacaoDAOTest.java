@@ -25,6 +25,8 @@ public class TransacaoDAOTest {
     private Connection conectar;
     private TransacaoDAO dao;
 
+    /*cria a tabela com java, por ser em memória e depois faz a conexão com o banco pelo transaçãoDAO
+    * e testa os metodos do DAO com os valores esperados */
     @BeforeEach
     void configurarBanco() throws SQLException {
         conectar = Conexao.conectarMemoria();

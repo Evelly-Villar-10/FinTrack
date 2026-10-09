@@ -11,7 +11,8 @@ import com.bianca.fintrack.exceptions.EntradaInvalidaException;
  *
  * @author bianca
  */
-/*Interface para usar o fintracker nas telas */
+/*Interface que permite compartilhar fintracker entre as telas */
 public interface FinTrackerInterface {
-    void setFinTracker(FinTracker fintracker)throws EntradaInvalidaException;
+
+    void setFinTracker(FinTracker fintracker) throws EntradaInvalidaException;
 }

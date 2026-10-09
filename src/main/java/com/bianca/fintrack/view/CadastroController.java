@@ -36,7 +36,7 @@ public class CadastroController {
     private PasswordField campoSenha;
 
     @FXML
-    public void onfazerCadastro() throws IOException{
+    public void onfazerCadastro() throws IOException {
         /*criação de variaveis para guarda o valor dos campos */
         String Nome = campoNome.getText();
         String Email = campoEmail.getText();
@@ -50,14 +50,14 @@ public class CadastroController {
             usuarioservice.cadastrarUsuario(Nome, Email, CPF, Telefone, Senha);
             System.out.println("\nCadastro realizado. ");
             FinApp.setRoot("/com/bianca/fintrack/view/tela_login");
-            
-        } catch(EntradaInvalidaException e){
+
+        } catch (EntradaInvalidaException e) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Alerta");
             alerta.setHeaderText(null);
             alerta.setContentText(e.getMessage());
             alerta.showAndWait();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Alerta");

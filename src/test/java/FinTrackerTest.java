@@ -20,6 +20,9 @@ import org.junit.jupiter.api.Test;
  */
 public class FinTrackerTest {
 
+    /*cria a tabela com java, por ser em memória e depois faz a conexão com o banco pelo transaçãoDAO
+    * e depois acessa o fintracker, cria as transações e calcula o saldo com o metodo do fintracker,
+    * por fim testa se o resultado está correto*/
     @Test
     void verificarCalcularSaldoTotal() throws SQLException, EntradaInvalidaException {
         Connection conectar = Conexao.conectarMemoria();
@@ -52,4 +55,37 @@ public class FinTrackerTest {
 
         conectar.close();
     }
+
+    @Test
+    void verificarValorInvalido() throws SQLException {
+        try (Connection conectar = Conexao.conectarMemoria()) {
+            String sql = """
+            CREATE TABLE transacao (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                eh_receita BOOLEAN,
+                valor REAL,
+                descricao TEXT,
+                data DATE,
+                usuario_id INTEGER
+            )
+            """;
+
+            try (PreparedStatement stmt = conectar.prepareStatement(sql)) {
+                stmt.executeUpdate();
+            }
+
+            TransacaoDAO dao = new TransacaoDAO(conectar);
+            FinTracker finTracker = new FinTracker(dao);
+
+            //Verifica se uma transação com valor zero lança a exceção esperada.
+            Assertions.assertThrows(
+                    EntradaInvalidaException.class,
+                    () -> finTracker.adicionarTransacao(
+                            true, 0, "Bolsa alimentação",
+                            LocalDate.of(2026, 10, 8), 1
+                    )
+            );
+        }
+    }
+
 }

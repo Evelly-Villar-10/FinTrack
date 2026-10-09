@@ -51,11 +51,11 @@ public class TelaPrincipalController implements FinTrackerInterface {
     private Button butaoRelatorio;
 
     /* é preciso um atributo do tipo da classe fintracker, para usa-lo como objeto e 
-fazer manipulaçoes com ele */
+    fazer manipulaçoes com ele */
     private FinTracker fintracker;
 
     /* quer a tabela já vindo cheia quando a tela abre, por isso usa initialize, 
-pra quando o FXMLLoader chamar o .fxml já preeencher */
+    pra quando o FXMLLoader chamar o .fxml já preeencher */
     public void initialize() {
         /*configuraçao para cada coluna pegar o seu respectivo atributo*/
         colData.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getData())
@@ -79,7 +79,7 @@ pra quando o FXMLLoader chamar o .fxml já preeencher */
     }
 
     private void carregarTransacoes() {
-        /*criaçao d uma lista do tipo transacao para guarda a busca que esse metodo do fintracker faz*/
+        /*criaçao de uma lista do tipo transacao para guarda a busca que esse metodo do fintracker faz*/
         int usuarioId = FinApp.getUsuariologado().getId();
         List<Transacao> lista;
         try {
@@ -109,9 +109,13 @@ pra quando o FXMLLoader chamar o .fxml já preeencher */
         FinApp.setRoot("/com/bianca/fintrack/view/relatorio");
     }
 
+    /*abre a tela de atualização com os dados da transação selecionada.*/
     @FXML
     public void onAtualizar() throws IOException, EntradaInvalidaException {
+        //Obtém a transação selecionada na tabela
         Transacao selecionada = tabela.getSelectionModel().getSelectedItem();
+
+        //verifica se alguma transação foi selecionada
         if (selecionada == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Erro");
@@ -120,13 +124,18 @@ pra quando o FXMLLoader chamar o .fxml já preeencher */
             alerta.showAndWait();
             return;
         }
-        
+
+        //Abre a tela de nova transação enviando os dados da transação selecionada.
         FinApp.setRoot("/com/bianca/fintrack/view/nova_transacao", selecionada);
     }
 
+    //Exclui a transação selecionada da tabela
     @FXML
     public void onExcluir() throws EntradaInvalidaException, SQLException {
+        //Obtém a transação selecionada na tabela
         Transacao selecionada = tabela.getSelectionModel().getSelectedItem();
+
+        //verifica se alguma transação foi selecionada
         if (selecionada == null) {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Erro");
@@ -135,10 +144,13 @@ pra quando o FXMLLoader chamar o .fxml já preeencher */
             alerta.showAndWait();
             return;
         }
+
+        //obtém o id da transação e do usuario
         int id = selecionada.getId();
         int usuarioId = selecionada.getUsuarioId();
 
         fintracker.removerTransacao(id, usuarioId);
+        //Atualiza a tabela para refletir a exclusão
         carregarTransacoes();
     }
 }

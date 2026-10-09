@@ -6,7 +6,6 @@ package com.bianca.fintrack.service;
 
 import com.bianca.fintrack.dao.UsuarioDAO;
 import com.bianca.fintrack.exceptions.EntradaInvalidaException;
-import com.bianca.fintrack.model.RepositorioGenerico;
 import com.bianca.fintrack.model.Usuario;
 import java.sql.SQLException;
 
@@ -16,21 +15,15 @@ import java.sql.SQLException;
  */
 public class UsuarioService {
 
-    /*guarda no repositorio */
-    private RepositorioGenerico<Usuario> usuarios;
-
-    public UsuarioService(RepositorioGenerico<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
-
+    //cria uma variável do tipo UsuarioDAO
     private UsuarioDAO usuarioDAO;
 
     public UsuarioService(UsuarioDAO usuario) {
         this.usuarioDAO = usuario;
     }
-    
+
     /*faz o cadastro dos usuarios, verifica todos os campos */
-    public void cadastrarUsuario(String nome, String email, String cpf, String telefone, String senha) throws EntradaInvalidaException, SQLException{
+    public void cadastrarUsuario(String nome, String email, String cpf, String telefone, String senha) throws EntradaInvalidaException, SQLException {
         if (nome == null || nome.isBlank()) {
             throw new EntradaInvalidaException("\nO nome não pode ser vazio.");
         }
@@ -65,12 +58,12 @@ public class UsuarioService {
 
     }
 
-    /*função para verificar se o email já existe, com o metodo do dao, se existir retorna verdadeiro se não retonra falso */
+    /*função para verificar se o email já existe, com o metodo do dao, se existir retorna verdadeiro se não retorna falso */
     public boolean emailExiste(String email) throws SQLException {
         Usuario achado = usuarioDAO.procurarEmail(email);
-            if (achado != null) {
-                return true;
-            }
+        if (achado != null) {
+            return true;
+        }
         return false;
     }
 
@@ -80,9 +73,10 @@ public class UsuarioService {
         return usuario_encontrado;
     }
 
-    /*função para logar o usuario, pega o usuario que teve seu email validado e verifica com sua senha se bate */
+    /*função para logar o usuario, pega o usuario que teve seu email validado e verifica com sua senha se bate com a de cadastro*/
     public Usuario loginUsuario(String email, String senha) throws SQLException {
-        Usuario usuarioEncontrado = buscarPorEmail(email);         /*criação de variável pra guarda retorno da função */
+        Usuario usuarioEncontrado = buscarPorEmail(email);
+        /*criação de variável pra guarda retorno da função */
         if (usuarioEncontrado == null) {
             System.out.println("\nErro, email não encontrado. ");
             return null;

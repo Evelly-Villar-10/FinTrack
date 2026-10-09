@@ -18,12 +18,14 @@ import java.util.List;
  */
 public class FinTracker {
 
+    // criacão de variavel para acessar o trnasaçãoDAO
     private TransacaoDAO transacaoDao;
 
     public FinTracker(TransacaoDAO transacaoDao) {
         this.transacaoDao = transacaoDao;
     }
 
+    // metodo de adicionar uma transação com verificação de campos e utilizando o DAO de transações
     public void adicionarTransacao(boolean ehReceita, double valor, String descricao, LocalDate data, int usuarioId) throws EntradaInvalidaException, SQLException {
         if (valor <= 0) {
             throw new EntradaInvalidaException("\nO valor deve ser maior que zero.");
@@ -48,6 +50,7 @@ public class FinTracker {
         transacaoDao.adicionar(mensal);
     }
 
+    //metodo lista as transaçoes por meio de uma lista de transações
     public List<Transacao> listarTransacoes(int usuarioId) throws EntradaInvalidaException, SQLException {
         List<Transacao> transacoes = transacaoDao.listar(usuarioId);
         if (transacoes.isEmpty()) {
@@ -57,6 +60,7 @@ public class FinTracker {
         }
     }
 
+    //metodo percorre a lista de transações e pega cada indice e compara o id que entrou e o da transação, se forem iguais remove
     public void removerTransacao(int id, int usuarioId) throws EntradaInvalidaException, SQLException {
         List<Transacao> listaTransacoes = transacaoDao.listar(usuarioId);
         if (listaTransacoes.isEmpty()) {
@@ -73,6 +77,7 @@ public class FinTracker {
         throw new EntradaInvalidaException("\nNenhuma transação com o ID " + id + " foi encontrada.");
     }
 
+    //metodo calsula o saldo total, percorre a lista somando ou diminuindo dependendo do tipo de entrada e retorna o saldo referente a o usuario passado como parametro
     public double calcularSaldoTotal(int usuarioId) throws EntradaInvalidaException, SQLException {
         double saldo = 0;
         List<Transacao> transacoes = transacaoDao.listar(usuarioId);
@@ -90,7 +95,7 @@ public class FinTracker {
         return saldo;
     }
 
-    /*adiciona varias transaçoes referentes a um dia, pega a lista e percorre, ai muda o id pra o correto e depois adiciona nas transaçoes */
+    /*adiciona varias transaçoes referentes a um dia, percorre a lista, e depois adiciona nas transaçoes */
     public void adicionarTransacaoDia(List<? extends Transacao> listaDoDia) throws SQLException {
         for (Transacao t : listaDoDia) {
             transacaoDao.adicionar(t);
@@ -130,8 +135,9 @@ public class FinTracker {
         }
         return despesasTotal;
     }
-    
-    public void atualizarTransacao(Transacao transacao) throws SQLException, EntradaInvalidaException{
+
+    //metodo recebe uma transação que será atualizada com o metodo do DAO
+    public void atualizarTransacao(Transacao transacao) throws SQLException, EntradaInvalidaException {
         if (transacao.getValor() <= 0) {
             throw new EntradaInvalidaException("\nO valor deve ser maior que zero.");
         }
@@ -141,5 +147,5 @@ public class FinTracker {
 
         transacaoDao.atualizar(transacao);
     }
-    
+
 }
